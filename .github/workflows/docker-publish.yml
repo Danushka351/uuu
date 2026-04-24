@@ -19,6 +19,6 @@ jobs:
 
       - name: Build and push the iamge
         run: |
-          echo ${{ secrets.GH_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GH_PAT }}
           docker build . --tag ghcr.io/${{ github.actor }}/uu:latest
           docker push ghcr.io/${{ github.actor }}/uu:latest
