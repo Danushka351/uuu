@@ -1,0 +1,24 @@
+name: Docker Image CI for GHCR
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+on:
+  push:
+    branches: [ "main" ]
+    
+jobs:
+  build_and_publish:
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build and push the iamge
+        run: |
+          docker login --username ${{ github.actor }} --password ${{secrets.GH_PAT}}
+          docker build . --tag ghcr.io/${{ github.actor }}/uu:latest
+          docker push ghcr.io/${{ github.actor }}/uu:latest
